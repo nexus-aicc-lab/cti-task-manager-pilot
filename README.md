@@ -15,8 +15,8 @@ Next.js + Electron으로 만든 간단한 CTI 업무용 상태창 애플리케�
 
 ```bash
 # 새 디렉토리 생성 및 이동
-mkdir cti-task-master
-cd cti-task-master
+mkdir cti-task-manager
+cd cti-task-manager
 
 # Next.js 프로젝트 생성 (대화형)
 npx create-next-app@latest .
@@ -41,7 +41,7 @@ npm install electron-serve
 ### 3. 프로젝트 구조
 
 ```
-cti-task-master/
+cti-task-manager/
 ├── src/
 │   └── app/
 │       └── page.tsx
