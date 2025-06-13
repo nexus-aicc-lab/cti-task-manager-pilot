@@ -75,7 +75,7 @@ cti-task-manager/
   },
   "build": {
     "appId": "com.cti.taskmaster",
-    "productName": "CTI Task Master",
+    "productName": "CTI Task Manager",
     "directories": {
       "output": "dist"
     },
