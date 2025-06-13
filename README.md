@@ -1,4 +1,4 @@
-# CTI Task Master
+# CTI Task Manager
 
 Next.js + Electron으로 만든 간단한 CTI 업무용 상태창 애플리케이션
 
