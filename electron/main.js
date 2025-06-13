@@ -51,10 +51,60 @@
 //     }
 // });
 
+// const { app, BrowserWindow, ipcMain } = require('electron');
+// const path = require('path');
+
+// // electron-serve를 직접 사용하지 말고 간단하게 처리
+// const createWindow = () => {
+//     const mainWindow = new BrowserWindow({
+//         width: 350,
+//         height: 200,
+//         webPreferences: {
+//             nodeIntegration: false,
+//             contextIsolation: true,
+//             preload: path.join(__dirname, 'preload.js')
+//         },
+//         frame: false,
+//         alwaysOnTop: true,
+//         resizable: false,
+//         skipTaskbar: true,
+//         title: "CTI Task Master"
+//     });
+
+//     // 패키지된 앱에서는 out 폴더의 index.html 로드
+//     if (app.isPackaged) {
+//         mainWindow.loadFile(path.join(__dirname, '../out/index.html'));
+//     } else {
+//         mainWindow.loadURL('http://localhost:3000');
+//         mainWindow.webContents.openDevTools();
+//     }
+
+//     // 닫기 버튼 이벤트 처리
+//     ipcMain.handle('close-app', () => {
+//         mainWindow.close();
+//     });
+// };
+
+// app.whenReady().then(() => {
+//     createWindow();
+// });
+
+// app.on('window-all-closed', () => {
+//     if (process.platform !== 'darwin') {
+//         app.quit();
+//     }
+// });
+
+// app.on('activate', () => {
+//     if (BrowserWindow.getAllWindows().length === 0) {
+//         createWindow();
+//     }
+// });
+
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
+const { protocol } = require('electron');
 
-// electron-serve를 직접 사용하지 말고 간단하게 처리
 const createWindow = () => {
     const mainWindow = new BrowserWindow({
         width: 350,
@@ -62,7 +112,8 @@ const createWindow = () => {
         webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
-            preload: path.join(__dirname, 'preload.js')
+            preload: path.join(__dirname, 'preload.js'),
+            webSecurity: false // 개발용으로 임시 추가
         },
         frame: false,
         alwaysOnTop: true,
@@ -73,7 +124,9 @@ const createWindow = () => {
 
     // 패키지된 앱에서는 out 폴더의 index.html 로드
     if (app.isPackaged) {
-        mainWindow.loadFile(path.join(__dirname, '../out/index.html'));
+        const indexPath = path.join(__dirname, '../out/index.html');
+        console.log('Loading from:', indexPath);
+        mainWindow.loadFile(indexPath);
     } else {
         mainWindow.loadURL('http://localhost:3000');
         mainWindow.webContents.openDevTools();
