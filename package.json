@@ -44,9 +44,14 @@
       "node_modules/**/*",
       "package.json"
     ],
+    "extraResources": [
+      {
+        "from": "out",
+        "to": "out"
+      }
+    ],
     "win": {
-      "target": "nsis",
-      "icon": "assets/icon.ico"
+      "target": "nsis"
     },
     "nsis": {
       "oneClick": false,

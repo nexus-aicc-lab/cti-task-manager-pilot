@@ -103,7 +103,7 @@
 
 const { app, BrowserWindow, ipcMain } = require('electron');
 const path = require('path');
-const { protocol } = require('electron');
+const isDev = process.env.NODE_ENV === 'development';
 
 const createWindow = () => {
     const mainWindow = new BrowserWindow({
@@ -113,7 +113,7 @@ const createWindow = () => {
             nodeIntegration: false,
             contextIsolation: true,
             preload: path.join(__dirname, 'preload.js'),
-            webSecurity: false // 개발용으로 임시 추가
+            webSecurity: false
         },
         frame: false,
         alwaysOnTop: true,
@@ -122,14 +122,13 @@ const createWindow = () => {
         title: "CTI Task Master"
     });
 
-    // 패키지된 앱에서는 out 폴더의 index.html 로드
-    if (app.isPackaged) {
-        const indexPath = path.join(__dirname, '../out/index.html');
-        console.log('Loading from:', indexPath);
-        mainWindow.loadFile(indexPath);
-    } else {
+    if (isDev) {
         mainWindow.loadURL('http://localhost:3000');
         mainWindow.webContents.openDevTools();
+    } else {
+        // 프로덕션에서는 리소스 경로 수정
+        const indexPath = path.join(process.resourcesPath, 'out', 'index.html');
+        mainWindow.loadFile(indexPath);
     }
 
     // 닫기 버튼 이벤트 처리
